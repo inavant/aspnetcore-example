@@ -1,0 +1,48 @@
+﻿@page
+@model Empresa.Proyecto.Web.Pages.Catalogos.SimpleEntityModel
+@{
+    ViewData["Title"] = "Catalogo Simple Entity";
+    var culture = System.Globalization.CultureInfo.CurrentCulture.ToString();
+}
+
+@using Empresa.Proyecto.Core.Entities;
+
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <table id="entities" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Valor</th>
+                <th>Creado</th>
+                <th>Modificado</th>
+            </tr>
+        </thead>
+      
+    </table>
+
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#entities').DataTable({
+                "ajax": {
+                    url: "?handler=Catalog",
+                    type: 'POST',
+                    headers: { 'RequestVerificationToken': $('@Html.AntiForgeryToken()').val() }
+                },
+                columns:[
+                    { data: 'Name'},
+                    { data: 'Value' },
+                    { data: 'Created' },
+                    { data: 'Modified'}
+                ]
+            });
+        })
+    </script>
+}
+
